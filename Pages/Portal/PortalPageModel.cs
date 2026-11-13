@@ -10,10 +10,21 @@ namespace QPlanner.Pages.Portal
         public const string TeamCookie = "QPlannerTeam";
         public const string GuestName = "Guest";
 
-        public string UserName => Request.Cookies[UserCookie] ?? GuestName;
+        // Returns the logged-in username, "Guest", or null when nobody logged in yet.
+        public static string? LoggedInUser(HttpRequest request)
+        {
+            return request.Cookies[UserCookie];
+        }
+
+        public static string SelectedTeam(HttpRequest request)
+        {
+            return MockData.FindTeam(request.Cookies[TeamCookie] ?? "").Name;
+        }
+
+        public string UserName => LoggedInUser(Request) ?? GuestName;
 
         public bool IsGuest => UserName == GuestName;
 
-        public string TeamName => MockData.FindTeam(Request.Cookies[TeamCookie] ?? "").Name;
+        public string TeamName => SelectedTeam(Request);
     }
 }

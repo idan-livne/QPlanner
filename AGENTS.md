@@ -45,9 +45,11 @@ Pages/
   Index.cshtml                  Landing page (hero, features, stats, "continue as guest")
   About.cshtml                  "How it works" content page
   Error.cshtml                  Template error page
-  Shared/_Layout.cshtml         Top navbar (logo, brand, Home, How it works, Log in / Sign up) + footer.
-                                Portal pages are NOT linked here, only from the sidebar after login
-  Shared/_PortalLayout.cshtml   Left sidebar + content. Nested inside _Layout
+  Shared/_Layout.cshtml         The only layout. Top navbar (logo, brand, Home, How it works, and on the
+                                right "Log in / Sign up" or, once logged in, the username / "Guest" +
+                                "View only" badge) + footer. Shows the sidebar on every page once logged
+                                in, and always on /Portal pages. Portal pages are NOT linked in the navbar
+  Shared/_Sidebar.cshtml        Left sidebar: selected team, portal links, Log out
   Account/
     Login.cshtml                Username + password, links to Register and RecoverPassword,
                                 "Continue as guest" button (handler: Guest)
@@ -55,8 +57,8 @@ Pages/
     RecoverPassword.cshtml      Username + two security questions, link back to Login
     Logout.cshtml               Deletes the login cookie, redirects to Index
   Portal/
-    _ViewStart.cshtml           Portal pages use _PortalLayout
-    PortalPageModel.cs          Base class for all portal pages: UserName, IsGuest, TeamName
+    PortalPageModel.cs          Base class for all portal pages: UserName, IsGuest, TeamName, plus static
+                                LoggedInUser(request) / SelectedTeam(request) used by the layout
     QuarterPageModel.cs         Base class for Current Q / Next Q (tasks, members, sprints, Tab)
     _QuarterTabs.cshtml         Partial view shared by CurrentQuarter and NextQuarter
     Home.cshtml                 Dashboard: status counts, progress, blocked tasks, who works on what
@@ -105,6 +107,9 @@ There is no real authentication yet. Two cookies are used (names in `PortalPageM
   Portal pages are only linked from the sidebar (reached after Login or "Continue as guest"),
   but they are not locked: opening a portal URL directly works in guest mode.
   `IsGuest` means view only. For example, the change-password form is disabled.
+- Logged in (the cookie exists, including `Guest`): the top navbar shows the username instead of
+  Log in / Sign up, and the sidebar is shown on every page. The username appears only in the
+  top navbar, not in the sidebar.
 - `QPlannerTeam`: set by Settings → Team. If it is missing, the first team is used.
   Every portal page shows only the selected team's data.
 
@@ -159,7 +164,7 @@ inline `style="width:..."`. Font: system font stack. Rounded cards (12–16px), 
 
 1. Create `Pages/<Folder>/<Name>.cshtml` and `<Name>.cshtml.cs`.
 2. Portal pages inherit `PortalPageModel`, so they get the user, guest flag and team.
-3. Add a link to the sidebar in `Pages/Shared/_PortalLayout.cshtml`. Only public pages (landing,
+3. Add a link to the sidebar in `Pages/Shared/_Sidebar.cshtml`. Only public pages (landing,
    About, account pages) go in the top navbar in `_Layout.cshtml`.
 4. Put any new styles in `site.css` with a `qp-` prefix.
 

@@ -1,5 +1,11 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+@{
+    string? loggedInUser = PortalPageModel.LoggedInUser(Context.Request);
+    string currentPage = ViewContext.RouteData.Values["page"]?.ToString() ?? "";
+    bool isPortalPage = currentPage.StartsWith("/Portal/");
+    bool showSidebar = loggedInUser != null || isPortalPage;
+}
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,16 +26,41 @@
                     <li class="nav-item"><a class="nav-link" asp-page="/Index">Home</a></li>
                     <li class="nav-item"><a class="nav-link" asp-page="/About">How it works</a></li>
                 </ul>
-                <div class="d-flex gap-2">
-                    <a class="btn btn-outline-light btn-sm" asp-page="/Account/Login">Log in</a>
-                    <a class="btn btn-warning btn-sm" asp-page="/Account/Register">Sign up</a>
+                <div class="d-flex align-items-center gap-2">
+                    @if (loggedInUser == null)
+                    {
+                        <a class="btn btn-outline-light btn-sm" asp-page="/Account/Login">Log in</a>
+                        <a class="btn btn-warning btn-sm" asp-page="/Account/Register">Sign up</a>
+                    }
+                    else
+                    {
+                        <span class="qp-navbar-user">@loggedInUser</span>
+                        @if (loggedInUser == PortalPageModel.GuestName)
+                        {
+                            <span class="badge text-bg-warning">View only</span>
+                        }
+                    }
                 </div>
             </div>
         </nav>
     </header>
 
     <main class="flex-grow-1">
-        @RenderBody()
+        @if (showSidebar)
+        {
+            <div class="container-fluid">
+                <div class="row">
+                    <partial name="_Sidebar" />
+                    <section class="col-md-9 col-lg-10 @(isPortalPage ? "qp-content" : "px-0")">
+                        @RenderBody()
+                    </section>
+                </div>
+            </div>
+        }
+        else
+        {
+            @RenderBody()
+        }
     </main>
 
     <footer class="qp-footer">

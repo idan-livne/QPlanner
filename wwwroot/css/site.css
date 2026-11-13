@@ -88,6 +88,14 @@ a {
   height: 36px;
 }
 
+.qp-navbar-user {
+  color: #fff;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 99px;
+  padding: 0.3rem 0.9rem;
+}
+
 /* ---------- Footer ---------- */
 
 .qp-footer {
@@ -261,14 +269,19 @@ a {
   }
 }
 
-.qp-sidebar-user {
+.qp-sidebar-team {
+  display: flex;
+  flex-direction: column;
   padding: 0 0.75rem 1.25rem;
   margin-bottom: 1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-.qp-sidebar-team {
+.qp-sidebar-label {
   color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .qp-sidebar .nav-link {

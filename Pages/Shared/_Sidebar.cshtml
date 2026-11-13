@@ -1,0 +1,22 @@
+@{
+    string currentPage = ViewContext.RouteData.Values["page"]?.ToString() ?? "";
+    string teamName = PortalPageModel.SelectedTeam(Context.Request);
+}
+
+<aside class="col-md-3 col-lg-2 qp-sidebar">
+    <div class="qp-sidebar-team">
+        <span class="qp-sidebar-label">Team</span>
+        <span class="fw-semibold">@teamName</span>
+    </div>
+
+    <nav class="nav flex-column">
+        <a class="nav-link @(currentPage == "/Portal/Home" ? "active" : "")" asp-page="/Portal/Home">Home</a>
+        <a class="nav-link @(currentPage == "/Portal/CurrentQuarter" ? "active" : "")" asp-page="/Portal/CurrentQuarter">Current Q <span class="qp-sidebar-hint">@MockData.CurrentQuarter</span></a>
+        <a class="nav-link @(currentPage == "/Portal/NextQuarter" ? "active" : "")" asp-page="/Portal/NextQuarter">Next Q <span class="qp-sidebar-hint">@MockData.NextQuarter</span></a>
+        <a class="nav-link @(currentPage == "/Portal/AllTasks" ? "active" : "")" asp-page="/Portal/AllTasks">All tasks</a>
+        <a class="nav-link @(currentPage == "/Portal/Team" ? "active" : "")" asp-page="/Portal/Team">Team management</a>
+        <a class="nav-link @(currentPage == "/Portal/Settings" ? "active" : "")" asp-page="/Portal/Settings">Settings</a>
+    </nav>
+
+    <a class="nav-link qp-sidebar-logout" asp-page="/Account/Logout">Log out</a>
+</aside>
