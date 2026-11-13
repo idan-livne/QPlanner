@@ -24,7 +24,9 @@ student to read and explain.
 dotnet run          # http://localhost:5217
 ```
 
-Target framework: `net11.0` (see `QPlanner.csproj`). Bootstrap 5.3 is in `wwwroot/lib/bootstrap`.
+Target framework: `net11.0` (see `QPlanner.csproj`). Only Bootstrap 5.3's CSS is included
+(`wwwroot/lib/bootstrap/dist/css`). The project has no JavaScript files at all: Bootstrap JS,
+jQuery and the validation scripts were removed on purpose.
 
 ## Folder structure
 
@@ -43,7 +45,8 @@ Pages/
   Index.cshtml                  Landing page (hero, features, stats, "continue as guest")
   About.cshtml                  "How it works" content page
   Error.cshtml                  Template error page
-  Shared/_Layout.cshtml         Top navbar (logo, brand, links, Log in / Sign up) + footer
+  Shared/_Layout.cshtml         Top navbar (logo, brand, Home, How it works, Log in / Sign up) + footer.
+                                Portal pages are NOT linked here, only from the sidebar after login
   Shared/_PortalLayout.cshtml   Left sidebar + content. Nested inside _Layout
   Account/
     Login.cshtml                Username + password, links to Register and RecoverPassword,
@@ -99,6 +102,8 @@ There is no real authentication yet. Two cookies are used (names in `PortalPageM
 
 - `QPlannerUser`: set by Login (any username and password are accepted), or set to `Guest` by
   the guest button. If the cookie is missing, the portal treats the visitor as `Guest`.
+  Portal pages are only linked from the sidebar (reached after Login or "Continue as guest"),
+  but they are not locked: opening a portal URL directly works in guest mode.
   `IsGuest` means view only. For example, the change-password form is disabled.
 - `QPlannerTeam`: set by Settings → Team. If it is missing, the first team is used.
   Every portal page shows only the selected team's data.
@@ -154,8 +159,8 @@ inline `style="width:..."`. Font: system font stack. Rounded cards (12–16px), 
 
 1. Create `Pages/<Folder>/<Name>.cshtml` and `<Name>.cshtml.cs`.
 2. Portal pages inherit `PortalPageModel`, so they get the user, guest flag and team.
-3. Add a link to the sidebar in `Pages/Shared/_PortalLayout.cshtml`. Add it to the top navbar in
-   `_Layout.cshtml` only if it is a main page.
+3. Add a link to the sidebar in `Pages/Shared/_PortalLayout.cshtml`. Only public pages (landing,
+   About, account pages) go in the top navbar in `_Layout.cshtml`.
 4. Put any new styles in `site.css` with a `qp-` prefix.
 
 ## Planned next steps (guidance)
@@ -193,8 +198,9 @@ inline `style="width:..."`. Font: system font stack. Rounded cards (12–16px), 
 
 ## Things to keep working
 
-- The top navbar on every page includes the logo, the brand, and links to Home, content pages,
+- The top navbar on every page includes the logo, the brand, and links to Home, How it works,
   Log in and Sign up.
+- Portal pages are reached only through Login or "Continue as guest" (no portal links in the top navbar).
 - Login links to Register and RecoverPassword. RecoverPassword and Register link back to Login.
 - At least 10 separate pages.
 - No JavaScript, no inline styles, a single CSS file.
