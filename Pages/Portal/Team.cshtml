@@ -1,0 +1,83 @@
+@page
+@model TeamModel
+@{
+    ViewData["Title"] = "Team management";
+}
+
+<div class="qp-page-header">
+    <h1 class="qp-page-title">@Model.Team.Name</h1>
+    <p class="text-secondary mb-0">@Model.Team.Description</p>
+</div>
+
+<div class="alert alert-info">
+    Adding and removing team members will be possible after the site is connected to a database.
+</div>
+
+<h2 class="qp-section-title">Team members</h2>
+<div class="row g-4 mb-5">
+    @foreach (var member in Model.Members)
+    {
+        var now = Model.CurrentTaskOf(member.Name);
+        <div class="col-md-6 col-xl-3">
+            <div class="card qp-member-card h-100">
+                <div class="card-body">
+                    <div class="qp-avatar">@member.Initials</div>
+                    <h3 class="h5 mb-0">@member.Name</h3>
+                    <p class="text-secondary mb-2">@member.Role</p>
+                    @if (member.Name == Model.Team.Lead)
+                    {
+                        <span class="badge text-bg-warning mb-2">Team lead</span>
+                    }
+                    <p class="small mb-2"><a href="mailto:@member.Email">@member.Email</a></p>
+                    <p class="small mb-0">
+                        <strong>@Model.Tasks.Count(t => t.Owner == member.Name)</strong> tasks in @MockData.CurrentQuarter
+                    </p>
+                    <p class="small mb-0">
+                        Now:
+                        @if (now != null)
+                        {
+                            <span class="badge qp-key">@now.Key</span> @now.Title
+                        }
+                        else
+                        {
+                            <span class="text-secondary">free this sprint</span>
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<h2 class="qp-section-title">All teams</h2>
+<div class="table-responsive">
+    <table class="table qp-table align-middle">
+        <thead>
+            <tr>
+                <th>Team</th>
+                <th>Team lead</th>
+                <th>Members</th>
+                <th>Tasks in @MockData.CurrentQuarter</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var team in MockData.Teams)
+            {
+                <tr>
+                    <td><strong>@team.Name</strong></td>
+                    <td>@team.Lead</td>
+                    <td>@MockData.MembersOf(team.Name).Count</td>
+                    <td>@MockData.TasksFor(team.Name, MockData.CurrentQuarter).Count</td>
+                    <td>
+                        @if (team.Name == Model.Team.Name)
+                        {
+                            <span class="badge text-bg-success">Selected</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<p class="text-secondary">To see another team, choose it in <a asp-page="/Portal/Settings" asp-route-tab="team">Settings</a>.</p>

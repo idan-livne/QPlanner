@@ -1,0 +1,113 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Sign up";
+}
+
+<div class="qp-auth-page">
+    <div class="qp-auth-card qp-auth-card-wide">
+        <img src="~/images/logo.svg" alt="" class="qp-auth-logo" />
+        <h1 class="qp-auth-title">Create your account</h1>
+        <p class="text-secondary text-center">It takes one minute. All fields are required.</p>
+
+        <form method="post">
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div asp-validation-summary="All" class="alert alert-danger"></div>
+            }
+
+            <h2 class="qp-form-section">Account</h2>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label asp-for="Username" class="form-label">Username</label>
+                    <input asp-for="Username" class="form-control" required />
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="Password" class="form-label">Password</label>
+                    <input asp-for="Password" type="password" class="form-control" required />
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="ConfirmPassword" class="form-label">Confirm password</label>
+                    <input asp-for="ConfirmPassword" type="password" class="form-control" required />
+                </div>
+            </div>
+
+            <h2 class="qp-form-section">Personal details</h2>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="FirstName" class="form-label">First name</label>
+                    <input asp-for="FirstName" class="form-control" required />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="LastName" class="form-label">Last name</label>
+                    <input asp-for="LastName" class="form-control" required />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="City" class="form-label">City</label>
+                    <input asp-for="City" class="form-control" required />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Phone" class="form-label">Phone</label>
+                    <input asp-for="Phone" type="tel" class="form-control" required />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <input asp-for="Email" type="email" class="form-control" required />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="BirthDate" class="form-label">Date of birth</label>
+                    <input asp-for="BirthDate" type="date" class="form-control" required />
+                </div>
+                <div class="col-12">
+                    <span class="form-label d-block">Gender</span>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" asp-for="Gender" value="Female" id="genderFemale" required />
+                        <label class="form-check-label" for="genderFemale">Female</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" asp-for="Gender" value="Male" id="genderMale" />
+                        <label class="form-check-label" for="genderMale">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" asp-for="Gender" value="Other" id="genderOther" />
+                        <label class="form-check-label" for="genderOther">Prefer not to say</label>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="qp-form-section">Password recovery questions</h2>
+            <p class="small text-secondary">If you forget your password, you will answer these two questions.</p>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="Question1" class="form-label">Question 1</label>
+                    <select asp-for="Question1" asp-items="Model.Questions" class="form-select" required>
+                        <option value="">Choose a question...</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Answer1" class="form-label">Answer 1</label>
+                    <input asp-for="Answer1" class="form-control" required />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Question2" class="form-label">Question 2</label>
+                    <select asp-for="Question2" asp-items="Model.Questions" class="form-select" required>
+                        <option value="">Choose a question...</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Answer2" class="form-label">Answer 2</label>
+                    <input asp-for="Answer2" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="d-flex gap-2 mt-4">
+                <button type="submit" class="btn btn-primary flex-grow-1">Create account</button>
+                <button type="reset" class="btn btn-outline-secondary">Reset</button>
+            </div>
+        </form>
+
+        <div class="qp-auth-links">
+            <span>Already have an account? <a asp-page="/Account/Login">Log in</a></span>
+        </div>
+    </div>
+</div>

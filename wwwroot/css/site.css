@@ -1,31 +1,670 @@
-html {
-  font-size: 14px;
+/* ============================================================
+   QPlanner - the only stylesheet of the site (together with Bootstrap)
+   ============================================================ */
+
+:root {
+  --qp-navy: #17324d;
+  --qp-navy-dark: #0f2336;
+  --qp-blue: #2f4bd8;
+  --qp-blue-dark: #2238b0;
+  --qp-blue-soft: #e6eafc;
+  --qp-amber: #f2b705;
+  --qp-amber-soft: #fff3c4;
+  --qp-green: #1f8a4c;
+  --qp-green-soft: #dcf3e5;
+  --qp-red: #c62f3c;
+  --qp-red-soft: #fbe1e3;
+  --qp-gray: #5b6472;
+  --qp-gray-soft: #eceef2;
+  --qp-line: #dde1e7;
+  --qp-bg: #f3f4f6;
+  --qp-ink: #14181f;
+}
+
+/* ---------- Page ---------- */
+
+body {
+  background: var(--qp-bg);
+  color: var(--qp-ink);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+a {
+  color: var(--qp-blue);
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--qp-blue);
+  --bs-btn-border-color: var(--qp-blue);
+  --bs-btn-hover-bg: var(--qp-blue-dark);
+  --bs-btn-hover-border-color: var(--qp-blue-dark);
+  --bs-btn-active-bg: var(--qp-blue-dark);
+  --bs-btn-active-border-color: var(--qp-blue-dark);
+}
+
+.btn-outline-primary {
+  --bs-btn-color: var(--qp-blue);
+  --bs-btn-border-color: var(--qp-blue);
+  --bs-btn-hover-bg: var(--qp-blue);
+  --bs-btn-hover-border-color: var(--qp-blue);
+}
+
+.qp-page-title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.25rem;
+}
+
+.qp-section-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.qp-page-header {
+  margin-bottom: 1.5rem;
+}
+
+/* ---------- Top navbar (in _Layout) ---------- */
+
+.qp-navbar {
+  background: var(--qp-navy);
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+}
+
+.qp-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 800;
+  font-size: 1.4rem;
+  letter-spacing: -0.02em;
+}
+
+.qp-logo {
+  width: 36px;
+  height: 36px;
+}
+
+/* ---------- Footer ---------- */
+
+.qp-footer {
+  background: var(--qp-navy-dark);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 1rem 0;
+  font-size: 0.9rem;
+}
+
+/* ---------- Landing page ---------- */
+
+.qp-hero {
+  background: linear-gradient(135deg, var(--qp-navy) 0%, var(--qp-blue) 100%);
+  color: #fff;
+  padding: 5rem 0;
+}
+
+.qp-hero-badge {
+  background: rgba(255, 255, 255, 0.15);
+  font-weight: 600;
+  padding: 0.5rem 0.9rem;
+}
+
+.qp-hero-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.qp-hero-text {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 1rem;
+}
+
+.qp-hero-guest {
+  color: #fff;
+}
+
+.qp-hero-guest:hover {
+  color: var(--qp-amber);
+}
+
+.qp-hero-img {
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+}
+
+.qp-feature-card {
+  border: 1px solid var(--qp-line);
+  border-radius: 14px;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.qp-feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(23, 50, 77, 0.12);
+}
+
+.qp-feature-badge {
+  background: var(--qp-blue-soft);
+  color: var(--qp-blue);
+  font-size: 0.85rem;
+}
+
+.qp-band {
+  background: var(--qp-navy);
+  color: #fff;
+}
+
+.qp-band-number {
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: var(--qp-amber);
+}
+
+.qp-band-label {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.qp-step-number {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  background: var(--qp-amber);
+  color: var(--qp-navy);
+  font-size: 1.5rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------- About page ---------- */
+
+.qp-tips li {
+  margin-bottom: 0.5rem;
+}
+
+.qp-callout {
+  background: var(--qp-blue-soft);
+  border-left: 5px solid var(--qp-blue);
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+
+/* ---------- Login, register and recover pages ---------- */
+
+.qp-auth-page {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1rem;
+}
+
+.qp-auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: #fff;
+  border: 1px solid var(--qp-line);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(23, 50, 77, 0.1);
+  padding: 2.5rem 2rem;
+}
+
+.qp-auth-card-wide {
+  max-width: 820px;
+}
+
+.qp-auth-logo {
+  display: block;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 1rem;
+}
+
+.qp-auth-title {
+  font-size: 1.7rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.qp-auth-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.25rem;
+}
+
+.qp-form-section {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--qp-navy);
+  border-bottom: 2px solid var(--qp-blue-soft);
+  padding-bottom: 0.4rem;
+  margin: 2rem 0 1rem;
+}
+
+/* ---------- Portal sidebar (in _PortalLayout) ---------- */
+
+.qp-sidebar {
+  background: var(--qp-navy-dark);
+  color: #fff;
+  padding: 1.5rem 1rem;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
+  .qp-sidebar {
+    min-height: calc(100vh - 120px);
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+.qp-sidebar-user {
+  padding: 0 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+.qp-sidebar-team {
+  color: rgba(255, 255, 255, 0.6);
 }
 
-body {
-  margin-bottom: 60px;
+.qp-sidebar .nav-link {
+  color: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  margin-bottom: 0.2rem;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+.qp-sidebar .nav-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+.qp-sidebar .nav-link.active {
+  background: var(--qp-blue);
+  color: #fff;
+  font-weight: 600;
+}
+
+.qp-sidebar-hint {
+  display: block;
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.qp-sidebar .qp-sidebar-logout {
+  margin-top: 1.5rem;
+  color: var(--qp-amber);
+}
+
+.qp-content {
+  padding: 2rem;
+}
+
+/* ---------- Portal widgets ---------- */
+
+.qp-stat {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--qp-line);
+  border-top: 4px solid var(--qp-gray);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  height: 100%;
+}
+
+.qp-stat-done {
+  border-top-color: var(--qp-green);
+}
+
+.qp-stat-progress {
+  border-top-color: var(--qp-blue);
+}
+
+.qp-stat-blocked {
+  border-top-color: var(--qp-red);
+}
+
+.qp-stat-number {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.qp-stat-label {
+  color: var(--qp-gray);
+  font-size: 0.9rem;
+}
+
+.qp-widget {
+  border: 1px solid var(--qp-line);
+  border-radius: 12px;
+}
+
+.qp-widget-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.qp-widget-number {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--qp-blue);
+  margin-right: 0.3rem;
+}
+
+.qp-progress {
+  appearance: none;
+  width: 100%;
+  height: 14px;
+  border: none;
+  border-radius: 7px;
+  background: var(--qp-gray-soft);
+  overflow: hidden;
+}
+
+.qp-progress::-webkit-progress-bar {
+  background: var(--qp-gray-soft);
+  border-radius: 7px;
+}
+
+.qp-progress::-webkit-progress-value {
+  background: var(--qp-green);
+  border-radius: 7px;
+}
+
+.qp-progress::-moz-progress-bar {
+  background: var(--qp-green);
+  border-radius: 7px;
+}
+
+.qp-totals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  background: #fff;
+  border: 1px solid var(--qp-line);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.qp-totals div {
+  display: flex;
+  flex-direction: column;
+}
+
+.qp-totals b {
+  font-size: 1.4rem;
+}
+
+.qp-totals span {
+  color: var(--qp-gray);
+  font-size: 0.85rem;
+}
+
+/* ---------- Tables ---------- */
+
+.qp-table {
+  background: #fff;
+  border: 1px solid var(--qp-line);
+}
+
+.qp-table thead th {
+  background: var(--qp-navy);
+  color: #fff;
+  font-weight: 600;
+}
+
+.qp-table tbody th {
+  color: var(--qp-gray);
+  font-weight: 600;
+  width: 40%;
+}
+
+/* ---------- Badges: keys, statuses and priorities ---------- */
+
+.qp-key {
+  background: var(--qp-blue-soft);
+  color: var(--qp-blue);
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+}
+
+.qp-count {
+  background: var(--qp-gray-soft);
+  color: var(--qp-gray);
+  font-size: 0.8rem;
+  vertical-align: middle;
+}
+
+.status-done {
+  background: var(--qp-green-soft);
+  color: var(--qp-green);
+}
+
+.status-in-progress {
+  background: var(--qp-blue-soft);
+  color: var(--qp-blue);
+}
+
+.status-not-started {
+  background: var(--qp-gray-soft);
+  color: var(--qp-gray);
+}
+
+.status-blocked {
+  background: var(--qp-red-soft);
+  color: var(--qp-red);
+}
+
+.priority-high {
+  background: var(--qp-red);
+  color: #fff;
+}
+
+.priority-medium {
+  background: var(--qp-amber);
+  color: var(--qp-ink);
+}
+
+.priority-low {
+  background: var(--qp-gray);
+  color: #fff;
+}
+
+/* ---------- Tabs (they work with links, no JavaScript) ---------- */
+
+.qp-tabs .nav-link {
+  color: var(--qp-gray);
+  font-weight: 600;
+}
+
+.qp-tabs .nav-link.active {
+  color: var(--qp-blue);
+}
+
+.qp-tab-panel {
+  background: #fff;
+  border: 1px solid var(--qp-line);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  padding: 1.5rem;
+}
+
+/* ---------- Quarter page: task list tab ---------- */
+
+.qp-task-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 120px;
+  gap: 1rem;
+  padding: 1rem 0.5rem;
+  border-bottom: 1px solid var(--qp-line);
+}
+
+.qp-task-row:last-child {
+  border-bottom: none;
+}
+
+.qp-task-head {
+  color: var(--qp-gray);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding-top: 0;
+}
+
+.qp-task-title {
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.qp-task-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.35rem 0;
+  color: var(--qp-gray);
+  font-size: 0.85rem;
+}
+
+.qp-task-desc {
+  color: var(--qp-gray);
+}
+
+.qp-task-when {
+  display: flex;
+  flex-direction: column;
+}
+
+.qp-task-when small {
+  color: var(--qp-gray);
+}
+
+.qp-task-row.is-done .qp-task-title {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+@media (max-width: 767px) {
+  .qp-task-row {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+
+  .qp-task-head {
+    display: none;
+  }
+}
+
+/* ---------- Quarter page: sprint plan tab ---------- */
+
+.qp-plan-scroll {
+  border: 1px solid var(--qp-line);
+  border-radius: 12px;
+}
+
+.qp-plan-table {
+  min-width: 900px;
+  table-layout: fixed;
+}
+
+.qp-plan-table thead th {
+  background: var(--qp-navy);
+  color: #fff;
+  text-align: center;
+  font-weight: 600;
+}
+
+.qp-plan-table thead th:first-child,
+.qp-plan-table tbody th {
+  width: 150px;
+  text-align: left;
+}
+
+.qp-plan-table th small {
+  display: block;
+  font-weight: 400;
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.qp-plan-table thead th.sprint-now {
+  background: var(--qp-amber);
+  color: var(--qp-ink);
+}
+
+.qp-plan-table td {
+  height: 90px;
+  vertical-align: middle;
+  border-left: 1px solid var(--qp-line);
+}
+
+.qp-plan-table td.sprint-now {
+  background: var(--qp-amber-soft);
+}
+
+.qp-plan-card {
+  height: 100%;
+  border-radius: 8px;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid currentColor;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.qp-plan-title {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--qp-ink);
+  font-weight: 500;
+}
+
+.qp-plan-card.status-done .qp-plan-title {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.qp-plan-free {
+  display: block;
+  text-align: center;
+  color: var(--qp-line);
+  font-size: 0.85rem;
+}
+
+.qp-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.qp-legend-now {
+  background: var(--qp-amber);
+  color: var(--qp-ink);
+}
+
+/* ---------- Team and settings pages ---------- */
+
+.qp-member-card,
+.qp-choice-card {
+  border: 1px solid var(--qp-line);
+  border-radius: 12px;
+}
+
+.qp-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--qp-blue);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.75rem;
 }

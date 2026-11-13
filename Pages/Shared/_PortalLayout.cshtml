@@ -1,0 +1,35 @@
+@model PortalPageModel
+@{
+    Layout = "_Layout";
+    string currentPage = ViewContext.RouteData.Values["page"]?.ToString() ?? "";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <aside class="col-md-3 col-lg-2 qp-sidebar">
+            <div class="qp-sidebar-user">
+                <div class="fw-semibold">@Model.UserName</div>
+                <div class="small qp-sidebar-team">@Model.TeamName</div>
+                @if (Model.IsGuest)
+                {
+                    <span class="badge text-bg-warning mt-2">Guest &middot; view only</span>
+                }
+            </div>
+
+            <nav class="nav flex-column">
+                <a class="nav-link @(currentPage == "/Portal/Home" ? "active" : "")" asp-page="/Portal/Home">Home</a>
+                <a class="nav-link @(currentPage == "/Portal/CurrentQuarter" ? "active" : "")" asp-page="/Portal/CurrentQuarter">Current Q <span class="qp-sidebar-hint">@MockData.CurrentQuarter</span></a>
+                <a class="nav-link @(currentPage == "/Portal/NextQuarter" ? "active" : "")" asp-page="/Portal/NextQuarter">Next Q <span class="qp-sidebar-hint">@MockData.NextQuarter</span></a>
+                <a class="nav-link @(currentPage == "/Portal/AllTasks" ? "active" : "")" asp-page="/Portal/AllTasks">All tasks</a>
+                <a class="nav-link @(currentPage == "/Portal/Team" ? "active" : "")" asp-page="/Portal/Team">Team management</a>
+                <a class="nav-link @(currentPage == "/Portal/Settings" ? "active" : "")" asp-page="/Portal/Settings">Settings</a>
+            </nav>
+
+            <a class="nav-link qp-sidebar-logout" asp-page="/Account/Logout">Log out</a>
+        </aside>
+
+        <section class="col-md-9 col-lg-10 qp-content">
+            @RenderBody()
+        </section>
+    </div>
+</div>

@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace QPlanner.Pages
 {
-    public class PrivacyModel : PageModel
+    public class AboutModel : PageModel
     {
         public void OnGet()
         {
         }
     }
-
 }

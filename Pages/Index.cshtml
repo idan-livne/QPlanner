@@ -1,10 +1,121 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Plan your quarter";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="qp-hero">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <span class="badge qp-hero-badge mb-3">Now planning @MockData.CurrentQuarter</span>
+                <h1 class="qp-hero-title">Plan the quarter. Track every task. Keep the whole team in sync.</h1>
+                <p class="qp-hero-text">
+                    QPlanner helps teams split a quarter into sprints, give every task an owner,
+                    and see at a glance what is done, what is in progress and what is blocked.
+                </p>
+                <div class="d-flex flex-wrap align-items-center gap-2 mt-4">
+                    <a class="btn btn-warning btn-lg" asp-page="/Account/Register">Create a free account</a>
+                    <a class="btn btn-outline-light btn-lg" asp-page="/Account/Login">Log in</a>
+                    <form method="post" asp-page="/Account/Login" asp-page-handler="Guest">
+                        <button type="submit" class="btn btn-link btn-lg qp-hero-guest">Continue as guest</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <img src="~/images/hero.svg" alt="A sprint board with tasks in three columns" class="img-fluid qp-hero-img" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5">
+    <h2 class="qp-section-title text-center">Everything your team needs for the quarter</h2>
+    <p class="text-center text-secondary mb-5">After you log in, the portal gives you these pages.</p>
+
+    <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+            <div class="card qp-feature-card h-100">
+                <div class="card-body">
+                    <span class="badge qp-feature-badge">Dashboard</span>
+                    <h3 class="h5 mt-3">See the big picture</h3>
+                    <p class="card-text text-secondary">How many tasks are done, what is blocked and who is working on what in the current sprint.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="card qp-feature-card h-100">
+                <div class="card-body">
+                    <span class="badge qp-feature-badge">Current Q</span>
+                    <h3 class="h5 mt-3">This quarter's plan</h3>
+                    <p class="card-text text-secondary">Every task of the quarter with its key, owner, priority and the sprints it takes.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="card qp-feature-card h-100">
+                <div class="card-body">
+                    <span class="badge qp-feature-badge">Sprint table</span>
+                    <h3 class="h5 mt-3">Who does what, when</h3>
+                    <p class="card-text text-secondary">A table with one row per team member and one column per sprint, so nobody gets too much work.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="card qp-feature-card h-100">
+                <div class="card-body">
+                    <span class="badge qp-feature-badge">Next Q</span>
+                    <h3 class="h5 mt-3">Get ready early</h3>
+                    <p class="card-text text-secondary">Start planning next quarter while you finish this one, and keep all open tasks in one list.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="qp-band py-5">
+    <div class="container">
+        <div class="row text-center g-4">
+            <div class="col-6 col-md-3">
+                <div class="qp-band-number">@MockData.Teams.Count</div>
+                <div class="qp-band-label">teams</div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="qp-band-number">@MockData.Members.Count</div>
+                <div class="qp-band-label">team members</div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="qp-band-number">@MockData.Tasks.Count</div>
+                <div class="qp-band-label">planned tasks</div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="qp-band-number">6</div>
+                <div class="qp-band-label">sprints every quarter</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5">
+    <h2 class="qp-section-title text-center mb-5">Three steps to a calm quarter</h2>
+    <div class="row g-4">
+        <div class="col-md-4 text-center">
+            <div class="qp-step-number">1</div>
+            <h3 class="h5">Sign up and pick your team</h3>
+            <p class="text-secondary">Create an account and choose your team in the settings page.</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="qp-step-number">2</div>
+            <h3 class="h5">Plan the sprints</h3>
+            <p class="text-secondary">Give every task a key, an owner and the sprints it needs.</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="qp-step-number">3</div>
+            <h3 class="h5">Track the progress</h3>
+            <p class="text-secondary">Follow the dashboard every week and deal with blocked tasks early.</p>
+        </div>
+    </div>
+    <div class="text-center mt-4">
+        <a class="btn btn-primary" asp-page="/About">Learn how QPlanner works</a>
+    </div>
+</section>

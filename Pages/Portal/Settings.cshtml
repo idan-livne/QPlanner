@@ -1,0 +1,97 @@
+@page
+@model SettingsModel
+@{
+    ViewData["Title"] = "Settings";
+}
+
+<div class="qp-page-header">
+    <h1 class="qp-page-title">Settings</h1>
+</div>
+
+<ul class="nav nav-tabs qp-tabs">
+    <li class="nav-item">
+        <a class="nav-link @(Model.Tab == "team" ? "" : "active")" asp-page="/Portal/Settings" asp-route-tab="user">User info</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link @(Model.Tab == "team" ? "active" : "")" asp-page="/Portal/Settings" asp-route-tab="team">Team</a>
+    </li>
+</ul>
+
+<div class="qp-tab-panel">
+    @if (Model.Message != "")
+    {
+        <div class="alert @(Model.Success ? "alert-success" : "alert-warning")">@Model.Message</div>
+    }
+
+    @if (Model.Tab != "team")
+    {
+        <div class="row g-4">
+            <div class="col-lg-5">
+                <h2 class="qp-section-title">Your details</h2>
+                <table class="table qp-table">
+                    <tbody>
+                        <tr><th>Username</th><td>@Model.UserName</td></tr>
+                        <tr><th>Account type</th><td>@(Model.IsGuest ? "Guest (view only)" : "Team member")</td></tr>
+                        <tr><th>Team</th><td>@Model.TeamName</td></tr>
+                    </tbody>
+                </table>
+                <p class="small text-secondary">
+                    Forgot your password?
+                    <a asp-page="/Account/RecoverPassword">Recover it with your security questions</a>.
+                </p>
+            </div>
+
+            <div class="col-lg-7">
+                <h2 class="qp-section-title">Change password</h2>
+                <form method="post" asp-page-handler="Password">
+                    <fieldset disabled="@Model.IsGuest">
+                        <div class="mb-3">
+                            <label for="currentPassword" class="form-label">Current password</label>
+                            <input type="password" id="currentPassword" name="currentPassword" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label">New password</label>
+                            <input type="password" id="newPassword" name="newPassword" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm new password</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Change password</button>
+                    </fieldset>
+                </form>
+                @if (Model.IsGuest)
+                {
+                    <p class="small text-secondary mt-2">Guests cannot change a password. <a asp-page="/Account/Login">Log in</a> first.</p>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <h2 class="qp-section-title">Choose the team to show</h2>
+        <p class="text-secondary">All the portal pages will show the tasks and members of this team.</p>
+
+        <form method="post" asp-page-handler="Team">
+            <div class="row g-3 mb-4">
+                @foreach (var team in MockData.Teams)
+                {
+                    string id = "team-" + team.Name.Replace(" ", "-");
+                    <div class="col-md-4">
+                        <div class="card qp-choice-card h-100">
+                            <div class="card-body">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="selectedTeam" id="@id" value="@team.Name" checked="@(team.Name == Model.TeamName)" />
+                                    <label class="form-check-label fw-semibold" for="@id">@team.Name</label>
+                                </div>
+                                <p class="small text-secondary mt-2 mb-1">@team.Description</p>
+                                <p class="small mb-0">Lead: @team.Lead &middot; @MockData.MembersOf(team.Name).Count members</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <button type="submit" class="btn btn-primary">Show this team</button>
+        </form>
+    }
+</div>

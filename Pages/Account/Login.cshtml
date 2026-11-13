@@ -1,0 +1,45 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<div class="qp-auth-page">
+    <div class="qp-auth-card">
+        <img src="~/images/logo.svg" alt="" class="qp-auth-logo" />
+        <h1 class="qp-auth-title">Welcome back</h1>
+        <p class="text-secondary text-center">Log in to see your team's quarter plan.</p>
+
+        @if (Model.Registered)
+        {
+            <div class="alert alert-success">Your account was created. You can log in now.</div>
+        }
+
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="Username" class="form-label">Username</label>
+                <input asp-for="Username" class="form-control" required />
+                <span asp-validation-for="Username" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label">Password</label>
+                <input asp-for="Password" type="password" class="form-control" required />
+                <span asp-validation-for="Password" class="text-danger small"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Log in</button>
+        </form>
+
+        <div class="qp-auth-links">
+            <a asp-page="/Account/RecoverPassword">Forgot your password?</a>
+            <span>New here? <a asp-page="/Account/Register">Create an account</a></span>
+        </div>
+
+        <hr />
+
+        <form method="post" asp-page-handler="Guest">
+            <button type="submit" class="btn btn-outline-secondary w-100">Continue as guest (view only)</button>
+        </form>
+    </div>
+</div>

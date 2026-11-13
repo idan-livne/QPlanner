@@ -1,0 +1,107 @@
+@page
+@model AboutModel
+@{
+    ViewData["Title"] = "How it works";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <h1 class="qp-page-title">How QPlanner works</h1>
+            <p class="lead text-secondary">
+                A quarter is three months of work. QPlanner splits every quarter into six sprints of two weeks,
+                and every task in the plan belongs to one team member for one or more sprints.
+            </p>
+
+            <h2 class="qp-section-title mt-5">The quarters of the year</h2>
+            <div class="table-responsive">
+                <table class="table qp-table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Quarter</th>
+                            <th>Months</th>
+                            <th>Sprints</th>
+                            <th>Planning meeting</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><span class="badge qp-key">Q1</span></td><td>January – March</td><td>6</td><td>Mid December</td></tr>
+                        <tr><td><span class="badge qp-key">Q2</span></td><td>April – June</td><td>6</td><td>Mid March</td></tr>
+                        <tr><td><span class="badge qp-key">Q3</span></td><td>July – September</td><td>6</td><td>Mid June</td></tr>
+                        <tr><td><span class="badge qp-key">Q4</span></td><td>October – December</td><td>6</td><td>Mid September</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 class="qp-section-title mt-5">What every task has</h2>
+            <ul class="list-group mb-4">
+                <li class="list-group-item"><strong>Key</strong> – a short unique name such as <span class="badge qp-key">WEB-101</span>, so everybody talks about the same task.</li>
+                <li class="list-group-item"><strong>Owner</strong> – the team member who is responsible for the task.</li>
+                <li class="list-group-item"><strong>Sprints</strong> – when the work happens, for example <em>S2 – S3</em>.</li>
+                <li class="list-group-item"><strong>Priority</strong> – how important the task is.</li>
+                <li class="list-group-item"><strong>Status</strong> – where the task stands right now.</li>
+            </ul>
+
+            <h2 class="qp-section-title mt-5">Task statuses</h2>
+            <div class="table-responsive">
+                <table class="table qp-table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Status</th>
+                            <th>What it means</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><span class="badge status-not-started">Not started</span></td><td>The task is planned but nobody has started working on it.</td></tr>
+                        <tr><td><span class="badge status-in-progress">In progress</span></td><td>The owner is working on the task in the current sprint.</td></tr>
+                        <tr><td><span class="badge status-blocked">Blocked</span></td><td>The task cannot move forward until something else happens.</td></tr>
+                        <tr><td><span class="badge status-done">Done</span></td><td>The task is finished and checked.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 class="qp-section-title mt-5">Priorities</h2>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <span class="badge priority-high">High</span>
+                            <p class="card-text mt-2">Must be finished this quarter. Other work waits for it.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <span class="badge priority-medium">Medium</span>
+                            <p class="card-text mt-2">Important, but can move to a later sprint if needed.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <span class="badge priority-low">Low</span>
+                            <p class="card-text mt-2">Nice to have. The first thing to move to next quarter.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="qp-section-title mt-5">Tips for a good plan</h2>
+            <ol class="qp-tips">
+                <li>Leave some free sprints for bugs and surprises.</li>
+                <li>Do not give one person two tasks in the same sprint.</li>
+                <li>Talk about blocked tasks in the weekly meeting, not at the end of the quarter.</li>
+                <li>Start planning next quarter two sprints before this one ends.</li>
+            </ol>
+
+            <div class="qp-callout mt-5">
+                <h2 class="h5">Ready to try it?</h2>
+                <p class="mb-3">Create an account, or look around as a guest first.</p>
+                <a class="btn btn-primary" asp-page="/Account/Register">Sign up</a>
+                <a class="btn btn-outline-primary" asp-page="/Account/Login">Log in</a>
+            </div>
+        </div>
+    </div>
+</div>

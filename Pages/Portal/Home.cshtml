@@ -1,0 +1,145 @@
+@page
+@model HomeModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="qp-page-header">
+    <h1 class="qp-page-title">Hello, @Model.UserName</h1>
+    <p class="text-secondary mb-0">@Model.TeamName &middot; @MockData.CurrentQuarter overview</p>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-xl">
+        <div class="qp-stat">
+            <span class="qp-stat-number">@Model.Tasks.Count</span>
+            <span class="qp-stat-label">Tasks this quarter</span>
+        </div>
+    </div>
+    <div class="col-6 col-xl">
+        <div class="qp-stat qp-stat-done">
+            <span class="qp-stat-number">@Model.CountStatus("Done")</span>
+            <span class="qp-stat-label">Done</span>
+        </div>
+    </div>
+    <div class="col-6 col-xl">
+        <div class="qp-stat qp-stat-progress">
+            <span class="qp-stat-number">@Model.CountStatus("In progress")</span>
+            <span class="qp-stat-label">In progress</span>
+        </div>
+    </div>
+    <div class="col-6 col-xl">
+        <div class="qp-stat qp-stat-blocked">
+            <span class="qp-stat-number">@Model.CountStatus("Blocked")</span>
+            <span class="qp-stat-label">Blocked</span>
+        </div>
+    </div>
+    <div class="col-12 col-xl">
+        <div class="qp-stat">
+            <span class="qp-stat-number">@Model.CountStatus("Not started")</span>
+            <span class="qp-stat-label">Not started</span>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-lg-6">
+        <div class="card qp-widget h-100">
+            <div class="card-body">
+                <h2 class="qp-widget-title">Quarter progress</h2>
+                <progress class="qp-progress" value="@Model.CountStatus("Done")" max="@Model.Tasks.Count"></progress>
+                <p class="mt-2 mb-0">
+                    <strong>@Model.CountStatus("Done") of @Model.Tasks.Count</strong> tasks are done.
+                </p>
+                @if (Model.CurrentSprint != null)
+                {
+                    <p class="text-secondary mb-0">
+                        We are in sprint <span class="badge qp-key">@Model.CurrentSprint.Name</span>
+                        (@Model.CurrentSprint.Dates), sprint @Model.CurrentSprint.Number of @Model.SprintCount.
+                    </p>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card qp-widget h-100">
+            <div class="card-body">
+                <h2 class="qp-widget-title">Next quarter</h2>
+                <p class="mb-2">
+                    <span class="qp-widget-number">@Model.NextQuarterCount</span>
+                    tasks are already planned for @MockData.NextQuarter.
+                </p>
+                <a class="btn btn-outline-primary btn-sm" asp-page="/Portal/NextQuarter">Open the @MockData.NextQuarter plan</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-5">
+        <div class="card qp-widget h-100">
+            <div class="card-body">
+                <h2 class="qp-widget-title">Blocked tasks</h2>
+                @if (Model.BlockedTasks.Count == 0)
+                {
+                    <p class="text-secondary mb-0">Nothing is blocked. Great job!</p>
+                }
+                else
+                {
+                    <ul class="list-group list-group-flush">
+                        @foreach (var task in Model.BlockedTasks)
+                        {
+                            <li class="list-group-item px-0">
+                                <span class="badge qp-key">@task.Key</span>
+                                <strong>@task.Title</strong>
+                                <div class="small text-secondary">@task.Owner &middot; @task.Description</div>
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <div class="card qp-widget h-100">
+            <div class="card-body">
+                <h2 class="qp-widget-title">Who is working on what</h2>
+                <div class="table-responsive">
+                    <table class="table qp-table align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Member</th>
+                                <th>Current task</th>
+                                <th>Tasks this Q</th>
+                                <th>Weeks this Q</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var member in Model.Members)
+                            {
+                                var now = Model.CurrentTaskOf(member.Name);
+                                <tr>
+                                    <td>@member.Name</td>
+                                    <td>
+                                        @if (now != null)
+                                        {
+                                            <span class="badge qp-key">@now.Key</span>
+                                            @now.Title
+                                            <span class="badge @now.StatusClass">@now.Status</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-secondary">Free this sprint</span>
+                                        }
+                                    </td>
+                                    <td>@Model.Tasks.Count(t => t.Owner == member.Name)</td>
+                                    <td>@Model.Tasks.Where(t => t.Owner == member.Name).Sum(t => t.Weeks)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,113 @@
+@model QuarterPageModel
+
+<div class="qp-page-header">
+    <h1 class="qp-page-title">@Model.Quarter plan</h1>
+    <p class="text-secondary mb-0">
+        @Model.TeamName &middot;
+        @Model.Sprints.First().Start.ToString("d MMM") – @Model.Sprints.Last().End.ToString("d MMM yyyy")
+    </p>
+</div>
+
+<div class="qp-totals">
+    <div><b>@Model.Tasks.Count</b><span>tasks</span></div>
+    <div><b>@Model.DoneCount / @Model.Tasks.Count</b><span>done</span></div>
+    <div><b>@Model.WeeksLeft</b><span>weeks of work left</span></div>
+    <div><b>@Model.TotalWeeks</b><span>weeks planned in total</span></div>
+    <div><b>@Model.Members.Count</b><span>team members</span></div>
+</div>
+
+<ul class="nav nav-tabs qp-tabs">
+    <li class="nav-item">
+        <a class="nav-link @(Model.ShowPlan ? "" : "active")" asp-page="@Model.PageName" asp-route-tab="list">Task list</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link @(Model.ShowPlan ? "active" : "")" asp-page="@Model.PageName" asp-route-tab="plan">Sprint plan</a>
+    </li>
+</ul>
+
+<div class="qp-tab-panel">
+    @if (!Model.ShowPlan)
+    {
+        <div class="qp-task-list">
+            <div class="qp-task-row qp-task-head">
+                <div>Key</div>
+                <div>Task</div>
+                <div>Sprints</div>
+            </div>
+            @foreach (var task in Model.Tasks)
+            {
+                <div class="qp-task-row @(task.IsDone ? "is-done" : "")">
+                    <div><span class="badge qp-key">@task.Key</span></div>
+                    <div>
+                        <div class="qp-task-title">@task.Title</div>
+                        <div class="qp-task-tags">
+                            <span class="badge @task.StatusClass">@task.Status</span>
+                            <span class="badge @task.PriorityClass">@task.Priority priority</span>
+                            <span>Owner: @task.Owner</span>
+                        </div>
+                        <div class="qp-task-desc">@task.Description</div>
+                    </div>
+                    <div class="qp-task-when">
+                        <strong>@task.SprintRange</strong>
+                        <small>@task.Weeks weeks</small>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive qp-plan-scroll">
+            <table class="table qp-plan-table mb-0">
+                <thead>
+                    <tr>
+                        <th>Team member</th>
+                        @foreach (var sprint in Model.Sprints)
+                        {
+                            <th class="@(sprint.IsCurrent ? "sprint-now" : "")">
+                                @sprint.Name
+                                <small>@sprint.Dates</small>
+                            </th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var member in Model.Members)
+                    {
+                        <tr>
+                            <th>
+                                @member.Name
+                                <small>@member.Role</small>
+                            </th>
+                            @foreach (var sprint in Model.Sprints)
+                            {
+                                var task = Model.TaskAt(member.Name, sprint.Number);
+                                <td class="@(sprint.IsCurrent ? "sprint-now" : "")">
+                                    @if (task != null)
+                                    {
+                                        <div class="qp-plan-card @task.StatusClass">
+                                            <span class="badge qp-key">@task.Key</span>
+                                            <span class="qp-plan-title">@task.Title</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <span class="qp-plan-free">Free</span>
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="qp-legend">
+            <span class="badge status-not-started">Not started</span>
+            <span class="badge status-in-progress">In progress</span>
+            <span class="badge status-blocked">Blocked</span>
+            <span class="badge status-done">Done</span>
+            <span class="badge qp-legend-now">Current sprint</span>
+        </div>
+    }
+</div>

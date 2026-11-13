@@ -1,0 +1,51 @@
+@page
+@model AllTasksModel
+@{
+    ViewData["Title"] = "All tasks";
+}
+
+<div class="qp-page-header">
+    <h1 class="qp-page-title">All open tasks</h1>
+    <p class="text-secondary mb-0">@Model.TeamName &middot; every task that is not done yet, in all quarters</p>
+</div>
+
+<div class="qp-totals">
+    <div><b>@Model.OpenTasks.Count</b><span>open tasks</span></div>
+    <div><b>@Model.OpenTasks.Count(t => t.Priority == "High")</b><span>high priority</span></div>
+    <div><b>@Model.OpenTasks.Count(t => t.Status == "Blocked")</b><span>blocked</span></div>
+    <div><b>@Model.OpenTasks.Sum(t => t.Weeks)</b><span>weeks of work</span></div>
+</div>
+
+@foreach (var quarter in Model.Quarters)
+{
+    var tasks = Model.OpenTasksIn(quarter);
+
+    <h2 class="qp-section-title mt-4">@quarter <span class="badge qp-count">@tasks.Count</span></h2>
+    <div class="table-responsive">
+        <table class="table qp-table align-middle">
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Task</th>
+                    <th>Owner</th>
+                    <th>Sprints</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var task in tasks)
+                {
+                    <tr>
+                        <td><span class="badge qp-key">@task.Key</span></td>
+                        <td>@task.Title</td>
+                        <td>@task.Owner</td>
+                        <td>@task.SprintRange</td>
+                        <td><span class="badge @task.PriorityClass">@task.Priority</span></td>
+                        <td><span class="badge @task.StatusClass">@task.Status</span></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
